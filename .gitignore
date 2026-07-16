@@ -1,0 +1,9 @@
+# Large model files and local volume mounts
+*.gguf
+/llama_cache/
+/models/
+
+# OS and Editor files
+.DS_Store
+.vscode/
+.idea/
