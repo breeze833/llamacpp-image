@@ -1,0 +1,15 @@
+# Ignore Git history
+.git
+.gitignore
+.dockerignore
+
+# Ignore local model caches and volume directories
+/llama_cache/
+/models/
+*.gguf
+
+# Ignore OS & IDE configs
+.DS_Store
+.vscode/
+.idea/
+.gemini/
