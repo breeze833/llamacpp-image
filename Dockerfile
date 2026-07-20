@@ -6,8 +6,6 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
     build-essential \
     cmake \
     git \
-    libopenblas-dev \
-    pkg-config \
     libcurl4-openssl-dev \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
@@ -16,10 +14,9 @@ WORKDIR /llama_build
 RUN git clone https://github.com/ggml-org/llama.cpp.git
 
 WORKDIR /llama_build/llama.cpp
-# Configure CMake. Explicitly enable BLAS and CURL for HuggingFace downloading.
+# Configure CMake. Explicitly enable native CPU optimization and CURL for HuggingFace downloading.
 RUN cmake -B build \
-    -DGGML_BLAS=ON \
-    -DGGML_BLAS_VENDOR=OpenBLAS \
+    -DGGML_NATIVE=ON \
     -DLLAMA_CURL=ON
 
 # Build all targets (cli, server, quantize, bench, etc.) to allow full functionality
@@ -33,8 +30,7 @@ FROM debian:trixie-slim
 
 # Install runtime dependencies (OpenBLAS, curl, and CA certs for downloading models)
 RUN apt-get update && apt-get -y install --no-install-recommends \
-    libopenblas0 \
-    libopenblas0-openmp \
+    libgomp1 \
     libcurl4t64 \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*

@@ -3,7 +3,7 @@
 This project provides a fully featured, lightweight, containerized build of [llama.cpp](https://github.com/ggml-org/llama.cpp). 
 
 > [!NOTE]
-> This container image is configured and built for **CPU execution** (utilizing OpenBLAS). It does not include GPU acceleration (CUDA, ROCm, etc.).
+> This container image is configured and built for **CPU execution**. It utilizes native CPU optimization. Therefore, it should be built on the target platform for determining the proper CPU features. It does not include GPU acceleration (CUDA, ROCm, etc.).
 
 By default, the container starts a `llama-server` instance configured to download and serve the **Gemma-4-E2B** model from Hugging Face. The image contains **all** the compiled `llama.cpp` binary utilities (`llama-cli`, `llama-quantize`, `llama-bench`, etc.) allowing you to override the default program when needed.
 
