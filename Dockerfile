@@ -55,4 +55,4 @@ ENV LLAMA_ARG_PORT=8080
 EXPOSE 8080
 
 ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
-CMD [ "-hf", "ggml-org/gemma-4-E2B-it-GGUF" ]
+CMD [ "-hf", "ggml-org/gemma-4-12B-it-GGUF:Q8_0", "--image-min-tokens", "280", "--image-max-tokens", "1120", "-b", "4096", "-ub", "4096", "--spec-type", "draft-mtp" ]

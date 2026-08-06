@@ -5,7 +5,7 @@ This project provides a fully featured, lightweight, containerized build of [lla
 > [!NOTE]
 > This container image is configured and built for **CPU execution**. It utilizes native CPU optimization. Therefore, it should be built on the target platform for determining the proper CPU features. It does not include GPU acceleration (CUDA, ROCm, etc.).
 
-By default, the container starts a `llama-server` instance configured to download and serve the **Gemma-4-E2B** model from Hugging Face. The image contains **all** the compiled `llama.cpp` binary utilities (`llama-cli`, `llama-quantize`, `llama-bench`, etc.) allowing you to override the default program when needed.
+By default, the container starts a `llama-server` instance configured to download and serve the **Gemma-4-12B** model from Hugging Face. The image contains **all** the compiled `llama.cpp` binary utilities (`llama-cli`, `llama-quantize`, `llama-bench`, etc.) allowing you to override the default program when needed.
 
 
 ---
@@ -20,7 +20,7 @@ podman build -t llamacpp-image .
 ```
 
 ### 2. Run the Container (Default)
-Run the server with the default configuration (serving Gemma-4-E2B on port `8080`):
+Run the server with the default configuration (serving Gemma-4-12B on port `8080`):
 
 ```bash
 podman run -d --name llama-server -p 8080:8080 llamacpp-image
