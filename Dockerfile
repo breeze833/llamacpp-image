@@ -51,8 +51,14 @@ RUN ldconfig && \
 ENV LLAMA_CACHE=/llama_cache
 ENV LLAMA_ARG_HOST=0.0.0.0
 ENV LLAMA_ARG_PORT=8080
+ENV LLAMA_ARG_HF_REPO=ggml-org/gemma-4-12B-it-GGUF:Q8_0
+ENV LLAMA_ARG_BATCH=1536
+ENV LLAMA_ARG_UBATCH=1536
+ENV LLAMA_ARG_SPEC_TYPE=draft-mtp
+ENV LLAMA_ARG_IMAGE_MIN_TOKENS=280
+ENV LLAMA_ARG_IMAGE_MAX_TOKENS=1120
+ENV LLAMA_ARG_CACHE_REUSE=256
 
 EXPOSE 8080
 
 ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
-CMD [ "-hf", "ggml-org/gemma-4-12B-it-GGUF:Q8_0", "--image-min-tokens", "280", "--image-max-tokens", "1120", "-b", "4096", "-ub", "4096", "--spec-type", "draft-mtp" ]
