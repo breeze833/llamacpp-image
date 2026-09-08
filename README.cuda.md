@@ -32,6 +32,27 @@ Starting on Windows requires some additional options to bind the host resource t
 podman run -d -name llama-server -p 8080:8080 --device /dev/dxg -v /usr/lib/wsl:/usr/lib/wsl:ro -e "LD_LIBRARY_PATH=/usr/lib/wsl/lib" llamacpp-image
 ```
 
+The port forwaring is based on the VM, not the host machine. Therefore we need additional configuration between the host and the VM. 
+Choose either of the approaches and edit the `.wslconfig` in the Windows user home directory.
+
+#### Approach 1: Mirrored
+
+This is suposed to be more efficient. It maps the external ports to the host's loopback interface.
+
+```
+[wsl]
+networkingMode=mirrored
+```
+
+#### Approach 2: Forwarding
+
+This is the traditional NAT based forwarding.
+
+```
+[wsl]
+localhostForwarding=true
+```
+
 ---
 
 ## 💾 Persisting Cached Models
@@ -50,6 +71,21 @@ podman run -d --name llama-server \
 If you use the Windows Podman, the relative path may not be resolved as what you expect. Use absolute path is stable.
 
 ---
+
+## RTX 2080Ti Specific
+
+This GPU card has limited VRAM (<12GB). Offloading layers would drastically degrade the performance. Here is my experience:
+
+* No offloading: 77 tokens/second
+* Keep 32 layers in VRAM: 1.x tokens/second
+
+It is better to keep all the layers in VRAM. There are options for trading the capabilities with the room:
+
+* Remove the vision model: `--no-mmproj`
+* Less accuracy in KV cache: `--cache-type-k` and `cache-type-v` could be `q8_0` or `q4_0`
+* Reduce number of concurrent requests: `-np 1`
+
+With no vision, `q8_0` kv, and concurrency 1, the effective context size is roughly 113k.
 
 For the other descriptions, please refer to [README.md](./README.md).
 
